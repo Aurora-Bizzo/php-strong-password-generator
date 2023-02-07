@@ -1,21 +1,24 @@
 <?php
 
-    $error = '';
-
     function passwordGenerator($lenght)
     {
-        $letters = 'abcdefghijklmnopqrstuvwxyz';
-        $numbers = '0123456789';
-        $symbols = '!£$%&/()=?^<>[]{}@§-_+*';
+        $data = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!£$%&/()=?^<>[]{}@§-_+*';
+
+        while(strlen($password) < $lenght)
+        {
+            $char = $data[rand(0, strlen($data) -1)];
+            $password .= $char;
+            var_dump($password);
+        }
     }
 
-    if(isset($_GET['password_lenght']) && $_GET['password_lenght'] !== '')
+    if (isset($_GET['password_lenght']) && $_GET['password_lenght'] !== '')
     {
-
+        passwordGenerator($_GET ['password_lenght']);
     }
-    else
+    elseif (isset($_GET['password_lenght']) && $_GET['password_lenght'] === '')
     {
-        $error= 'Nessun paametro valido inserito'
+        $error = 'Nessun parametro valido inserito';
     }
 
 ?>
@@ -41,12 +44,12 @@
         </div>
         <div class="row">
             <div class="col-8 mx-auto p-4 bg-white rounded">
-                <?php if($error != ''){  ?>
+                <?php if(isset ($error)){  ?>
                     <div class="alert alert-info" role="alert">
                         <?php echo $error; ?>
                     </div>
                 <?php } ?>
-                <form action="./index.php" method="POST">
+                <form action="./index.php" method="GET">
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lunghezza password:</label>
