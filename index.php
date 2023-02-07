@@ -8,13 +8,14 @@
         {
             $char = $data[rand(0, strlen($data) -1)];
             $password .= $char;
-            var_dump($password);
         }
+
+        return $password;
     }
 
     if (isset($_GET['password_lenght']) && $_GET['password_lenght'] !== '')
     {
-        passwordGenerator($_GET ['password_lenght']);
+        $password = passwordGenerator($_GET ['password_lenght']);
     }
     elseif (isset($_GET['password_lenght']) && $_GET['password_lenght'] === '')
     {
@@ -36,20 +37,34 @@
 </head>
 <body>
     <div class="container">
+
         <div class="row">
+
             <div class="col-12 d-flex flex-column align-items-center">
                 <h1 class="text-muted my-4">Strong Password Generator</h1>
                 <h2 class="text-white mb-4">Genera una password sicura</h2>
             </div>
+
         </div>
+
+
         <div class="row">
+
+            <?php if(isset ($error)){  ?>
+                <div class="alert alert-info col-8 mx-auto" role="alert">
+                    <?php echo $error; ?>
+                </div>
+            <?php } ?>
+
+        </div>
+
+
+        <div class="row">
+
             <div class="col-8 mx-auto p-4 bg-white rounded">
-                <?php if(isset ($error)){  ?>
-                    <div class="alert alert-info" role="alert">
-                        <?php echo $error; ?>
-                    </div>
-                <?php } ?>
+
                 <form action="./index.php" method="GET">
+
                     <div class="form-group row">
                         <div class="col-6">
                             <label>Lunghezza password:</label>
@@ -58,40 +73,20 @@
                             <input type="number" class="rounded" name="password_lenght">
                         </div>
                     </div>
-                    
-                    <div class="form-group row my-3">
-                        <div class="col-6">
-                            <label>Consenti ripetizioni di uno o più caratteri:</label>
-                        </div>
-                        <div class="col-6">
-                            <input type="radio">
-                            <label>Sì</label><br>
-
-                            <input type="radio">
-                            <label>No</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        <div class="col-6"></div>
-                        <div class="col-6">
-                            <input class="rounded" type="checkbox">
-                            <label>Lettere</label><br>
-
-                            <input class="rounded" type="checkbox">
-                            <label>Numeri</label><br>
-
-                            <input class="rounded" type="checkbox">
-                            <label>Simboli</label>
-                        </div>
-                    </div>
-
+            
                     <div class="form-group row my-3">
                         <div class="col-12">
                             <button class="btn btn-primary">Invia</button>
                             <button class="btn btn-secondary">Annulla</button>
                         </div>
                     </div>
+
+                    <?php if(isset ($password)){  ?>
+                    <h3 class="d-flex justify-content-center">
+                        La tua password è: <?php echo $password; ?>
+                    </h3>
+                    <?php } ?>
+
                 </form>
             </div>
         </div>
